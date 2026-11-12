@@ -1,0 +1,131 @@
+// ===== Variables =====
+$color-primary: #6366f1;
+$color-primary-hover: #4f46e5;
+$color-danger: #ef4444;
+$color-danger-hover: #dc2626;
+$color-success: #22c55e;
+$color-bg: #0f172a;
+$color-surface: #1e293b;
+$color-surface-hover: #334155;
+$color-text: #f8fafc;
+$color-text-muted: #94a3b8;
+$color-border: #334155;
+$radius: 12px;
+$shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.2);
+$transition: 0.2s ease;
+
+// ===== Reset & Base =====
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: $color-bg;
+  color: $color-text;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// ===== Counter Card =====
+.counter {
+  background: $color-surface;
+  border-radius: $radius;
+  box-shadow: $shadow;
+  padding: 48px 40px;
+  text-align: center;
+  width: 360px;
+  border: 1px solid $color-border;
+}
+
+.counter__title {
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: $color-text-muted;
+  margin-bottom: 16px;
+}
+
+.counter__value {
+  font-size: 72px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 32px;
+  font-variant-numeric: tabular-nums;
+  transition: color $transition;
+
+  &--positive {
+    color: $color-success;
+  }
+
+  &--negative {
+    color: $color-danger;
+  }
+
+  &--zero {
+    color: $color-text;
+  }
+}
+
+.counter__actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+// ===== Buttons =====
+.counter__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 24px;
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  border-radius: $radius;
+  cursor: pointer;
+  transition: all $transition;
+  user-select: none;
+
+  &:active {
+    transform: scale(0.97);
+  }
+
+  &--primary {
+    background: $color-primary;
+    color: white;
+
+    &:hover {
+      background: $color-primary-hover;
+    }
+  }
+
+  &--danger {
+    background: $color-danger;
+    color: white;
+
+    &:hover {
+      background: $color-danger-hover;
+    }
+  }
+
+  &--outline {
+    background: transparent;
+    color: $color-text-muted;
+    border: 1px solid $color-border;
+
+    &:hover {
+      background: $color-surface-hover;
+      color: $color-text;
+    }
+  }
+}
+
+.counter__btn--full {
+  grid-column: 1 / -1;
+}

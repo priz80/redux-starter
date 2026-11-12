@@ -1,77 +1,23 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import { createStore } from "redux";
-import "./index.scss"
-
-const initialState = { value: 0 };
-
-const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case "INC":
-      return { ...state, value: state.value + 1 };
-    case "DEC":
-      return { ...state, value: state.value - 1 };
-    case "RND":
-      return { ...state, value: action.payload };
-    default:
-      return state;
-  }
-};
+import { createStore, bindActionCreators } from 'redux';
+import reducer from './reducer';
+import * as actions from './actions';
+import './index.scss';
 
 const store = createStore(reducer);
 
-function Counter() {
-  const [count, setCount] = React.useState(store.getState().value);
+const { dispatch, subscribe, getState } = store;
 
-  React.useEffect(() => {
-    return store.subscribe(() => {
-      setCount(store.getState().value);
-    });
-  }, []);
+const update = () => {
+    document.getElementById('counter').textContent = getState().value;
+};
 
-  const valueClass =
-    count > 0
-      ? "counter__value--positive"
-      : count < 0
-        ? "counter__value--negative"
-        : "counter__value--zero";
+subscribe(update);
 
-  return (
-    <div className="counter">
-      <div className="counter__title">Redux Counter</div>
-      <div className={`counter__value ${valueClass}`}>{count}</div>
-      <div className="counter__actions">
-        <button
-          className="counter__btn counter__btn--primary"
-          onClick={() => store.dispatch({ type: "INC" })}
-        >
-          +1
-        </button>
-        <button
-          className="counter__btn counter__btn--danger"
-          onClick={() => store.dispatch({ type: "DEC" })}
-        >
-          -1
-        </button>
-        <button
-          className="counter__btn counter__btn--outline counter__btn--full"
-          onClick={() =>
-            store.dispatch({
-              type: "RND",
-              payload: Math.floor(Math.random() * 11) - 5,
-            })
-          }
-        >
-          Random
-        </button>
-      </div>
-    </div>
-  );
-}
+const { inc, dec, rnd } = bindActionCreators(actions, dispatch);
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(
-  <React.StrictMode>
-    <Counter />
-  </React.StrictMode>,
-);
+document.getElementById('inc').addEventListener('click', inc);
+document.getElementById('dec').addEventListener('click', dec);
+document.getElementById('rnd').addEventListener('click', () => {
+    const value = Math.floor(Math.random() * 11) - 5;
+    dispatch(rnd(value));
+});

@@ -1,6 +1,11 @@
 import React from 'react';
+import {inc, dec, rnd} from "../actions"
+import { useSelector, useDispatch } from 'react-redux';
 
-const Counter = ({ counter, inc, dec, rnd }) => {
+
+const Counter = () => {
+    const counter = useSelector((state) => state.counter);
+    const dispatch = useDispatch();
     return (
         <div className="counter">
             <div className="counter__title">Redux Counter</div>
@@ -8,9 +13,9 @@ const Counter = ({ counter, inc, dec, rnd }) => {
                 {counter}
             </div>
             <div className="counter__actions">
-                <button onClick={inc} className="counter__btn counter__btn--primary">+1</button>
-                <button onClick={dec} className="counter__btn counter__btn--danger">-1</button>
-                <button onClick={rnd} className="counter__btn counter__btn--outline counter__btn--full">Random</button>
+                <button onClick={() => dispatch(inc())} className="counter__btn counter__btn--primary">+1</button>
+                <button onClick={() => dispatch(dec())} className="counter__btn counter__btn--danger">-1</button>
+                <button onClick={() => dispatch(rnd())} className="counter__btn counter__btn--outline counter__btn--full">RND</button>
             </div>
         </div>
     );

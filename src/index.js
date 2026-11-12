@@ -1,23 +1,23 @@
+import React from 'react';
+import ReactDOM from 'react-dom/client';
 import { createStore, bindActionCreators } from 'redux';
 import reducer from './reducer';
 import * as actions from './actions';
+import App from './components/App';
 import './index.scss';
 
 const store = createStore(reducer);
 
-const { dispatch, subscribe, getState } = store;
+const { inc, dec, rnd } = bindActionCreators(actions, store.dispatch);
 
 const update = () => {
-    document.getElementById('counter').textContent = getState().value;
+    const state = store.getState();
+    root.render(
+        <App counter={state.value} inc={inc} dec={dec} rnd={rnd} />
+    );
 };
 
-subscribe(update);
+store.subscribe(update);
 
-const { inc, dec, rnd } = bindActionCreators(actions, dispatch);
-
-document.getElementById('inc').addEventListener('click', inc);
-document.getElementById('dec').addEventListener('click', dec);
-document.getElementById('rnd').addEventListener('click', () => {
-    const value = Math.floor(Math.random() * 11) - 5;
-    dispatch(rnd(value));
-});
+const root = ReactDOM.createRoot(document.getElementById('root'));
+update();

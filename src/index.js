@@ -12,7 +12,7 @@ const reducer = (state = initialState, action) => {
     case "DEC":
       return { ...state, value: state.value - 1 };
     case "RND":
-      return { ...state, value: state.value * action.payload };
+      return { ...state, value: action.payload };
     default:
       return state;
   }
@@ -58,7 +58,7 @@ function Counter() {
           onClick={() =>
             store.dispatch({
               type: "RND",
-              payload: Math.floor(Math.random() * 10) - 5,
+              payload: Math.floor(Math.random() * 11) - 5,
             })
           }
         >
